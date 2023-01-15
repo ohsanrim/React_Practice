@@ -1,15 +1,15 @@
 import React from 'react'
-import{ SmileOutlined } from '@ant-design/icons';
+// import{ SmileOutlined } from '@ant-design/icons';
 // import Item from 'antd/es/list/Item';
+import './MyPage/MyPage.css';
 
 function MyPage() {
     return (
-        <div style={{
-            height: '80px', display: 'flex',
-            flexDirection: 'column', alignItems: 'center',
-            justifyContent: 'center', fontSize:'1rem'
-        }}>
-           <p> Happy Coding  <SmileOutlined/></p>
+        <div>
+            <div className="section1">
+            </div>
+            <div className="section2">
+            </div>
         </div>
     )
 }

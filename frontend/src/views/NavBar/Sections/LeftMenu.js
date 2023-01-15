@@ -30,7 +30,7 @@ function LeftMenu(props) {
   //   </SubMenu> */}
   // </Menu>
   // )
-  return <Menu mode="horizontal" items={items} />;
+  return <Menu mode={props.mode} items={items} />;
 }
 
 export default LeftMenu

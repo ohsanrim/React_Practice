@@ -1,0 +1,11 @@
+.section1{
+    width:100%;
+    background-color: yellow;
+    height: 40%;
+    min-height: calc(30vh);
+}
+.section2{
+    width:100%;
+    background-color: beige;
+    min-height: calc(70vh);
+}
