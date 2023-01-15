@@ -1,0 +1,24 @@
+ul li{ list-style: none; }
+
+.skill_design{ height: 25px; background-color: #e8eaf6; color: #9398b6; font-size: 14px; margin-right:5px; padding-left:10px; padding-top:2px; padding-bottom:2px; padding-right:10px; border-radius: 4px; align-items: center; display:flex; justify-content: center;}
+
+
+.design_wrap { width: 100%; height: 700px; top: calc(50% - 350px); display: -webkit-flex; display: -moz-flex; display: -ms-flex; display: -o-flex; display: flex; justify-content: space-between; }
+.design_wrap li { width: 100%; height: 100%; background-color: #fff; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); }
+.design_wrap li .mockup { position: relative; width: 100%; height: 100%; float: left; overflow: hidden; background-size: 100% !important; transition: all .3s; }
+.design_wrap li .mockup a { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity:0.5; text-align: center; line-height: 700px; color: #fff; background-color: rgba(0, 0, 0, 0.3); transition: all .3s; }
+.design_wrap li .mockup a img { position: absolute; height: 100%;top: 50%; left: 50%; transform: translate(-50%, -50%); }
+.design_wrap li .mockup:hover a { opacity: 1; }
+
+.work_ex{ font-size: 18px; font-weight: 400; color: #7d6f7c; line-height: 40px; }
+.work1_wrapper,.work2_wrapper{ display:flex; width:100%; height:100%;justify-content: space-between; align-items: center;}
+.work_info, .design_container{ width:50%; }
+.work_info{ margin:50px;}
+.design_container{ display:flex; justify-content: center;}
+.work_header h1{ font-size: 36px; color: #9398b6; letter-spacing: -1px; line-height: 50px; margin:0; margin-bottom:10px; }
+.work_skills{ flex-wrap: wrap; display:flex; }
+.work_ex{ width:90%; margin-top:50px; margin-bottom:25px; font-size: 15px;}
+.gitLink_img{ width:30px; cursor:pointer; }
+.work_gitLink{ display:flex; align-items: center; }
+#powerPoint_work1{ margin-left:12px; color:#494949; font-size:23px; cursor:pointer; }
+.skill_design{font-size: 10px;}
