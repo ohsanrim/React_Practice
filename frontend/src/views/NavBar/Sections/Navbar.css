@@ -11,12 +11,16 @@
 .menu__logo {
   width: 150px;
   float: left;
+  
 }
 
 .menu__logo a {
   display: inline-block;
   font-size: 20px;
   padding: 19px 20px;
+  text-decoration-line: none;
+  color:Black;
+  
 }
 
 .menu__container .ant-menu-item {
