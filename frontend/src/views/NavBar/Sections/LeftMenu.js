@@ -9,6 +9,10 @@ const items = [
   { label: <a href="/">Home</a>, key: "mail" },
 
   { label: <a href="/MyPage">MyPage</a>, key: "MyPage" },
+  
+  { label: <a href="/Report">Report</a>, key: "Report" },
+
+  { label: <a href="/APITest">APITEST</a>, key: "APITEST" }
 
 ];
 

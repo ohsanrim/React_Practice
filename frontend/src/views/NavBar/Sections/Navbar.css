@@ -25,6 +25,9 @@
 
 .menu__container .ant-menu-item {
   padding: 0px 5px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu__container .ant-menu-submenu-title {
@@ -66,6 +69,12 @@
   padding: 14px 24px !important;
 }
 
+li {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 767px) {
   .menu__mobile-button {
     display: inline-block !important;
@@ -88,4 +97,6 @@
   .menu__logo a {
     padding: 10px 20px;
   }
+  
+  
 }

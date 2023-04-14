@@ -6,6 +6,8 @@ import NavBar from "./views/NavBar/NavBar";
 import MyPage from "./views/MyBlog/MyPage.js";
 // import Auth from "./hoc/auth";
 import Footer from "./views/Footer/Footer";
+import APITestPage from "./views/APITest/APITestPage.js"
+import ReportPage from "./views/Report/ReportPage.js"
 
 function App() {
 //    const [user, setUsers] = useState('')
@@ -33,6 +35,8 @@ function App() {
                 <Switch>
                     <Route exact path="/" component={ MyPage } />
                     <Route exact path="/MyPage" component={ MyPage } />
+                    <Route exact path="/APITest" component={ APITestPage } />
+                    <Route exact path="/Report" component={ ReportPage } />
                 </Switch>
             </div>
             <Footer />
