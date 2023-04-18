@@ -2,27 +2,50 @@
 // import Item from 'antd/es/list/Item';
 import './APITest/page.css';
 import axiosApi from '../../utils/api/AxiosApi.js';
+import SampleModal from '../Modal/popup/popup.jsx';
 import axios from 'axios';
 import React, {useState, useEffect} from "react";
+import ModalPortal from '../Modal/Modal.jsx';
 // import axios from 'axios';
 import { USER_SERVER } from '../../Config.js';
 
-const name = "ohsanrim";
-const phoneNum = "01000000000";
-const birth = "19999999";
+
+
 
 async function apiTestByGet(){
         
     const response = await axios.get(
-        USER_SERVER+"/APITestByGetLoading/"+name+"/"+phoneNum+"/"+birth
+        USER_SERVER+"/APITestByGetAll"
       );
       
       return response.data;
 }
 
-function APITest() {
-    
+async function showDetails(data){
+    console.log("userName >> "+data.name);
+    console.log("birth >> "+data.birth);
+    console.log("phoneNum >> "+data.phoneNum);
+}
 
+
+function APITest() {
+    const [ name, setName ] = useState(null);
+    const [ phoneNum, setPhoneNume ] = useState(null);
+    const [ birth, setBirth ] = useState(null);
+    const [modalOpened, setModalOpened] = useState(false);
+
+    useEffect(() => {
+        setName("ohsanrim");
+        setPhoneNume("01000000000");
+        setBirth("19999999");   
+    }, []);
+
+    const handleOpen = () => {
+        setModalOpened(true);
+      };
+      const handleClose = () => {
+        setModalOpened(false);
+    };
     /*
     Writer: Harin Kwak
     Date: 2023/04/17
@@ -108,10 +131,12 @@ function APITest() {
             <div className="queryTestWrapper">
                 <h3>GET 방식</h3>
                 <ul>
-                    <li><label>이름: </label>{datas.name}</li>
-                    <li><label>생일: </label>{datas.birth}</li>
-                    <li><label>핸드폰번호: </label>{datas.phoneNum}</li>
+                    {/* List 형태로 데이터 리스트 뿌려주기 */}
+                    {datas.map(data => (
+                        <li key={data.no}><label>이름: </label>{data.name}<button onClick={handleOpen}>상세보기</button></li>
+                    ))}
                 </ul>
+
             </div>
             <div className="queryTestWrapperByPost">
                 <h3>POST 방식</h3>
@@ -121,6 +146,13 @@ function APITest() {
                     <li><label>핸드폰번호: </label>{datas.phoneNum}</li>
                 </ul>
             </div>
+            {modalOpened && (
+                <ModalPortal closePortal={handleClose}>
+                    <SampleModal></SampleModal>
+                </ModalPortal>
+            )}
+            <div id="modal"></div>
+
         </div>
     );
 }
