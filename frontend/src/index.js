@@ -13,12 +13,7 @@ import Reducer from './_reducers';
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    {/* <Provider> */}
-
-     {/* <App /> */}
-    {/* </Provider> */}
-    <BrowserRouter>
+  <BrowserRouter>
       <Provider
           store={createStoreWithMiddleware(
               Reducer,
@@ -29,7 +24,6 @@ root.render(
         <App />
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

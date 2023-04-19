@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 // JS
 import $ from 'jquery';
 import 'datatables.net-dt';

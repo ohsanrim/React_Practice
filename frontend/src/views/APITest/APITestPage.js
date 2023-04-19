@@ -13,6 +13,10 @@ import Dialog from '../Dialog/Dialog.js';
 // DataBase 
 import Datatable from '../DataTable/Datatable.js';
 
+// Chart 
+import LineChart from '../Chart/LineChart.js';
+import LineChartByChartJS from '../Chart/chartjs.js';
+
 async function apiTestByGetAll(){
         
     const response = await axios.get(
@@ -223,6 +227,10 @@ function APITest() {
         dataType: 'json',
       };
 
+    
+
+    
+    
     return (
         <div className="container">
             <div className="contentsWrapper">
@@ -231,12 +239,33 @@ function APITest() {
                     {/* <Datatable dataTableColumnDefs={dataTableColumnDefs} dataTableData={dataTableData} dataTableColumns={dataTableColumns}></Datatable> */}
                     <Datatable dataTableAjax={dataTableAjax} dataTableColumns={dataTableColumns}></Datatable>
                 </div>
+                <div className="chartTestWrapper content">                    z
+                    <div className="lineChart">
+                        <h3>LineChart(nivo/line 라이브러리) 사용하기</h3>
+                        <div className="source_url">
+                            출처 : <a href='https://nivo.rocks/pie/canvas/'>NIVO 라이브러리</a>
+                        </div>
+                        <LineChart></LineChart>
+                        
+                    </div>
+                </div>
+                <div className="chartTestWrapper2 content">                    z
+                    <div className="lineChart2">
+                        <h3>기본 Chart(Chart.js 라이브러리) 사용하기</h3>
+                        <div className="source_url">
+                            출처 : <a href='https://react-chartjs-2.js.org/examples/pie-chart/'>Chart.js 라이브러리</a>
+                        </div>
+                        <div className="pieChartWrapper">
+                            <LineChartByChartJS></LineChartByChartJS>
+                        </div>
+                    </div>
+                </div>
                 <div className="dialogTestWrapper content">
                     <h3>커스터마이징 Dialog 사용하기</h3>
                     <div className="buttonWrapper">
-                        <button id="sampleBtn" onClick={() => alertDialog()}>알림 Dialog</button>
-                        <button id="sampleBtn" onClick={() => confirmDialog()}>확인 Dialog</button>
-                        <button id="sampleBtn" onClick={() => deleteDialog()}>삭제 Dialog</button>
+                        <button onClick={() => alertDialog()}>알림 Dialog</button>
+                        <button onClick={() => confirmDialog()}>확인 Dialog</button>
+                        <button onClick={() => deleteDialog()}>삭제 Dialog</button>
                     </div>
                 </div>
                 <div className="queryTestWrapper content">

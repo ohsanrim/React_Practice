@@ -12,8 +12,6 @@ import 'datatables.net-responsive-dt';
 import 'datatables.net-dt/css/jquery.dataTables.min.css';
 import 'datatables.net-responsive-dt/css/responsive.dataTables.min.css';
 
-import { Bar } from 'react-chartjs-2';
-
 import React, {useState, useEffect, useRef} from "react";
 
 import menu_2 from '../../images/menu_2.png';
