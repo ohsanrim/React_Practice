@@ -3,12 +3,15 @@
 import './APITest/page.css';
 import axiosApi from '../../utils/api/AxiosApi.js';
 import axios from 'axios';
-import React, {useState, useEffect} from "react";
+import React, {useRef, useState, useEffect} from "react";
 // import axios from 'axios';
 import { USER_SERVER } from '../../Config.js';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import Dialog from '../Dialog/Dialog.js';
+
+// DataBase 
+import Datatable from '../DataTable/Datatable.js';
 
 async function apiTestByGetAll(){
         
@@ -30,6 +33,17 @@ function APITestByGet(data){
      .then((res) => {return res.json();})
      .then((data) => {return data;})
 }
+// alert Dailog
+async function alertDialog(){
+    confirmAlert({
+        customUI: ({ onClose }) => {
+        return (
+        ///////////////////////////////////////////////Alert 띄우기///////////////////////////////////////////////        
+        <Dialog type="alert" header="확인" msg="수정이 완료되었습니다!" onClose={onClose} />
+        );
+      }
+    });
+  };
 
 async function confirmDialog(data){
     confirmAlert({
@@ -39,7 +53,7 @@ async function confirmDialog(data){
         // <Dialog type="alert" header="확인" msg="수정이 완료되었습니다!" onClose={onClose} />
         
         ///////////////////////////////////////////////Confirm 띄우기///////////////////////////////////////////////        
-        <Dialog type="confirm" header="확인" msg="확인하시겠습니까?" onClose={onClose} successFunc={() => afterConfirm(data)}/>
+        <Dialog type="confirm" header="확인" msg="등록하시겠습니까?" onClose={onClose} successFunc={() => afterConfirm(data)}/>
 
         ///////////////////////////////////////////////Delete Confirm 띄우기///////////////////////////////////////////////       
         // <Dialog type="delete" header="삭제" msg="삭제하시겠습니까?" onClose={onClose} successFunc={afterDelete}/>          
@@ -48,7 +62,22 @@ async function confirmDialog(data){
     });
   };
 
-  function afterDelete(){
+  async function deleteDialog(data){
+
+    confirmAlert({
+        customUI: ({ onClose }) => {
+        return (
+        ///////////////////////////////////////////////Delete Confirm 띄우기///////////////////////////////////////////////       
+        <Dialog type="delete" header="삭제" msg="삭제하시겠습니까?" onClose={onClose} successFunc={() => afterDelete(data)}/>          
+        );
+      }
+    });
+  };
+
+  function afterDelete(data){
+    if(data !=null){
+        APITestByGet(data);
+    }
     confirmAlert({
         customUI: ({ onClose }) => {
         return (
@@ -56,15 +85,16 @@ async function confirmDialog(data){
         );
       }
     });
+
 }
 
 function afterConfirm(data){
     // console.log("userName >> "+data.name);
     // console.log("birth >> "+data.birth);
     // console.log("phoneNum >> "+data.phoneNum);
-
-    APITestByGet(data);
-    
+    if(data !=null){
+        APITestByGet(data);
+    }
     // console.log(datas);
     confirmAlert({
         customUI: ({ onClose }) => {
@@ -76,6 +106,8 @@ function afterConfirm(data){
 }
 
 function APITest() {
+
+    // API Test Zone
     const [ name, setName ] = useState(null);
     const [ phoneNum, setPhoneNume ] = useState(null);
     const [ birth, setBirth ] = useState(null);
@@ -168,26 +200,55 @@ function APITest() {
 
     const [state, refetch] = axiosApi(apiTestByGetAll, []);
     const { loading, data: datas, error } = state;
-
+    
     if (loading) return <div>로딩중..</div>;
     if (error) return <div>에러가 발생했습니다</div>;
     if (!datas) return null;
-    
+
+    //dataTable 
+    // const dataTableData = [['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500']];
+    const dataTableColumns = [
+        { data: 'name', title: 'Name' },
+        { data: 'position', title: 'Position' },
+        { data: 'office', title: 'Office' },
+        { data: 'extn', title: 'Extn.' },
+        { data: 'startDate', title: 'Start date' },
+        { data: 'salary', title: 'Salary' }
+    ];
+    // const dataTableColumnDefs = [];
+
+    const dataTableAjax ={
+        type: 'GET',
+        url: USER_SERVER+"/dataTableTestAPI",
+        dataType: 'json',
+      };
+
     return (
         <div className="container">
-            <div className="insertTestWrapper">
-
+            <div className="contentsWrapper">
+                <div className="datatableTestWrapper content">
+                    <h3>DataTable 라이브러리 사용하기</h3>
+                    {/* <Datatable dataTableColumnDefs={dataTableColumnDefs} dataTableData={dataTableData} dataTableColumns={dataTableColumns}></Datatable> */}
+                    <Datatable dataTableAjax={dataTableAjax} dataTableColumns={dataTableColumns}></Datatable>
+                </div>
+                <div className="dialogTestWrapper content">
+                    <h3>커스터마이징 Dialog 사용하기</h3>
+                    <div className="buttonWrapper">
+                        <button id="sampleBtn" onClick={() => alertDialog()}>알림 Dialog</button>
+                        <button id="sampleBtn" onClick={() => confirmDialog()}>확인 Dialog</button>
+                        <button id="sampleBtn" onClick={() => deleteDialog()}>삭제 Dialog</button>
+                    </div>
+                </div>
+                <div className="queryTestWrapper content">
+                    <h3>API 조회</h3>
+                    {/* <ul>
+                        {datas.map(data => (
+                            <li key={data.no}><label>이름: </label>{data.name}<button onClick={() => confirmDialog(data)}>상세보기</button></li>
+                        ))}
+                    </ul> */}
+                </div>
             </div>
-            <div className="queryTestWrapper">
-                <h3>GET 방식</h3>
-                <ul>
-                    {/* List 형태로 데이터 리스트 뿌려주기 */}
-                    {datas.map(data => (
-                        <li key={data.no}><label>이름: </label>{data.name}<button onClick={() => confirmDialog(data)}>상세보기</button></li>
-                    ))}
-                </ul>
-
-            </div>
+            
         </div>
     );
 }
