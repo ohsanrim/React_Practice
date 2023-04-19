@@ -1,6 +1,7 @@
+h3 {border-bottom:2px solid rgb(184, 184, 184);height:30px;}
 .container { padding-top: 60px; display:flex;justify-content: center; width:100%;}
 .container .contentsWrapper {width:90%;}
-.container .contentsWrapper .content{width:100%; margin: 10px 0px 10px 0px; }
+.container .contentsWrapper .content{width:100%; margin: 10px; margin-bottom:20px; border:1px solid rgb(206, 206, 206); padding: 10px;padding-left:30px; padding-right:30px;}
 .container .contentsWrapper .chartTestWrapper, .container .contentsWrapper .chartTestWrapper2  {height: 400px;}
 .container .contentsWrapper .chartTestWrapper .lineChart, .container .contentsWrapper .chartTestWrapper2 .lineChart2{ height:80%; width:100%;}
 .container .contentsWrapper .chartTestWrapper2 .lineChart2 .pieChartWrapper { height:100%;width:100%; display:flex; justify-content: center;}

@@ -15,7 +15,7 @@ import Datatable from '../DataTable/Datatable.js';
 
 // Chart 
 import LineChart from '../Chart/LineChart.js';
-import LineChartByChartJS from '../Chart/chartjs.js';
+import LineChartByChartJS from '../Chart/chartjs.jsx';
 
 async function apiTestByGetAll(){
         
@@ -233,13 +233,13 @@ function APITest() {
     
     return (
         <div className="container">
-            <div className="contentsWrapper">
+            <div className="contentsWrapper ">
                 <div className="datatableTestWrapper content">
                     <h3>DataTable 라이브러리 사용하기</h3>
                     {/* <Datatable dataTableColumnDefs={dataTableColumnDefs} dataTableData={dataTableData} dataTableColumns={dataTableColumns}></Datatable> */}
                     <Datatable dataTableAjax={dataTableAjax} dataTableColumns={dataTableColumns}></Datatable>
                 </div>
-                <div className="chartTestWrapper content">                    z
+                <div className="chartTestWrapper content">                    
                     <div className="lineChart">
                         <h3>LineChart(nivo/line 라이브러리) 사용하기</h3>
                         <div className="source_url">
@@ -249,11 +249,12 @@ function APITest() {
                         
                     </div>
                 </div>
-                <div className="chartTestWrapper2 content">                    z
+                <div className="chartTestWrapper2 content">                    
                     <div className="lineChart2">
                         <h3>기본 Chart(Chart.js 라이브러리) 사용하기</h3>
                         <div className="source_url">
-                            출처 : <a href='https://react-chartjs-2.js.org/examples/pie-chart/'>Chart.js 라이브러리</a>
+                            출처 : <a href='https://react-chartjs-2.js.org/examples/pie-chart/'>Chart.js 라이브러리</a><br/>
+                            구현: 특정 임계치 이상의 데이터일 경우 빨간색으로 그려주고, 그 아래는 초록색으로 표시 
                         </div>
                         <div className="pieChartWrapper">
                             <LineChartByChartJS></LineChartByChartJS>

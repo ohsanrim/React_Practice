@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@nivo/line": "^0.80.0",
     "@nivo/pie": "^0.80.0",
     "@testing-library/jest-dom": "^5.16.5",
