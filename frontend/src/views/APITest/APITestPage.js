@@ -19,7 +19,7 @@ import LineChartByChartJS from '../../utils/chart/chartjs.jsx';
 
 //loadingbar
 import Loading from '../../utils/loading/Loading.jsx';
-
+import $ from 'jquery';
 
 
 
@@ -222,9 +222,15 @@ function APITest() {
         { data: 'office', title: 'Office' },
         { data: 'extn', title: 'Extn.' },
         { data: 'startDate', title: 'Start date' },
-        { data: 'salary', title: 'Salary' }
+        { data: 'salary', title: 'Salary' },
+        { title:'Detail', name: 'Detail',defaultContent:"<input type=\"button\" class=\"showDetailBtn\" value=\"상세정보\">",
+        createdCell: function (cell, cellData, rowData){$(cell).on("click", "input", rowData, showDetailColume);}
+    }
     ];
-    // const dataTableColumnDefs = [];
+
+    function showDetailColume(event) {
+        alert("You clicked in " + event.data.name + "'s row");
+      }
 
     const dataTableAjax ={
         type: 'GET',

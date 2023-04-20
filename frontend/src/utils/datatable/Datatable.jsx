@@ -14,10 +14,10 @@ function Datatable(props){
      useEffect(() => {
       const table = $(tableRef.current).DataTable({
         lengthChange: false, // 표시 건수기능 숨기기
-		searching: false, // 검색 기능 숨기기
-		ordering: false, // 정렬 기능 숨기기
-		info: false, // 정보 표시 숨기기
-		// paging: false, // 페이징 기능 숨기기
+        searching: false, // 검색 기능 숨기기
+        ordering: false, // 정렬 기능 숨기기
+        info: false, // 정보 표시 숨기기
+        // paging: false, // 페이징 기능 숨기기
         pageLength: 5,  // 페이징 처리를 통한 화면 표시 건 수
         responsive: true, // 반응형 켜기
         ajax: props.dataTableAjax,
