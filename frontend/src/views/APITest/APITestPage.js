@@ -8,17 +8,17 @@ import React, {useRef, useState, useEffect} from "react";
 import { USER_SERVER } from '../../Config.js';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import Dialog from '../Dialog/Dialog.js';
+import Dialog from '../../utils/dialog/Dialog.jsx';
 
 // DataBase 
-import Datatable from '../DataTable/Datatable.js';
+import Datatable from '../../utils/datatable/Datatable.jsx';
 
 // Chart 
-import LineChart from '../Chart/LineChart.js';
-import LineChartByChartJS from '../Chart/chartjs.jsx';
+import LineChart from '../../utils/chart/LineChart.jsx';
+import LineChartByChartJS from '../../utils/chart/chartjs.jsx';
 
 //loadingbar
-import Loading from '../Loading/Loading.js';
+import Loading from '../../utils/loading/Loading.jsx';
 
 
 
@@ -240,6 +240,7 @@ function APITest() {
     }
     // alert Dailog
     async function alertDialog(){
+        console.log("1");
         confirmAlert({
             customUI: ({ onClose }) => {
             return (
@@ -251,6 +252,7 @@ function APITest() {
       };
     
     async function confirmDialog(data){
+        console.log("2");
         confirmAlert({
             customUI: ({ onClose }) => {
             return (
@@ -268,7 +270,7 @@ function APITest() {
       };
     
       async function deleteDialog(data){
-    
+        console.log("3");
         confirmAlert({
             customUI: ({ onClose }) => {
             return (

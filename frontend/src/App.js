@@ -8,6 +8,7 @@ import HomePage from "./views/Home/HomePage.js";
 import Footer from "./views/Footer/Footer";
 import APITestPage from "./views/APITest/APITestPage.js"
 import ReportPage from "./views/Report/ReportPage.js"
+import LoginPage from "./views/Login/Login.js";
 
 function App() {
 
@@ -17,12 +18,13 @@ function App() {
             <NavBar />
             <div style={{ minHeight: 'calc(100vh - 80px)' }}>
                 <Switch>
-                    <Route exact path="/" component={ HomePage } />
+                    {/* <Route exact path="/" component={ HomePage } /> */}
+                    <Route exact path="/" component={ LoginPage } />
                     <Route exact path="/APITest" component={ APITestPage } />
                     <Route exact path="/Report" component={ ReportPage } />
                 </Switch>
             </div>
-            <Footer />
+            {/* <Footer /> */}
             </Suspense>
         </BrowserRouter>
     );

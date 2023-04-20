@@ -1,5 +1,5 @@
 import React from 'react';
-import './dialog.css';
+import '../../css/dialog/dialog.css';
 
 function Dialog({type, header, msg, onClose, successFunc}) {
   return (
