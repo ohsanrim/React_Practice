@@ -17,14 +17,12 @@ import Datatable from '../DataTable/Datatable.js';
 import LineChart from '../Chart/LineChart.js';
 import LineChartByChartJS from '../Chart/chartjs.jsx';
 
-async function apiTestByGetAll(){
-        
-    const response = await axios.get(
-        USER_SERVER+"/APITestByGetAll"
-      );
-      
-      return response.data;
-}
+//loadingbar
+import Loading from '../Loading/Loading.js';
+
+
+
+
 
 // async function showDetails(data){
 //     console.log("userName >> "+data.name);
@@ -110,7 +108,16 @@ function afterConfirm(data){
 }
 
 function APITest() {
+    const [loading, setLoading] = useState(true);
 
+    async function apiTestByGetAll(){
+        
+        const response = await axios.get(
+            USER_SERVER+"/APITestByGetLoading/ohsanrim/20220002/01000000000"
+          );
+          setLoading(false);
+          return response.data;
+    }
     // API Test Zone
     const [ name, setName ] = useState(null);
     const [ phoneNum, setPhoneNume ] = useState(null);
@@ -129,8 +136,6 @@ function APITest() {
       const handleClose = () => {
         setModalOpened(false);
     };
-    
-    
     
     /*
     Writer: Harin Kwak
@@ -203,11 +208,11 @@ function APITest() {
 
 
     const [state, refetch] = axiosApi(apiTestByGetAll, []);
-    const { loading, data: datas, error } = state;
+    // const { loading, data: datas, error } = state;
     
-    if (loading) return <div>로딩중..</div>;
-    if (error) return <div>에러가 발생했습니다</div>;
-    if (!datas) return null;
+    // if (loading) return <div>로딩중..</div>;
+    // if (error) return <div>에러가 발생했습니다</div>;
+    // if (!datas) return null;
 
     //dataTable 
     // const dataTableData = [['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500']];
@@ -227,13 +232,88 @@ function APITest() {
         dataType: 'json',
       };
 
-    
 
+      function APITestByGet(data){
+        fetch("/gateway/restapi/v1.0/APITestByGet/"+data.name+"/"+data.phoneNum+"/"+data.birth, { method: "GET" })
+         .then((res) => {return res.json();})
+         .then((data) => {return data;})
+    }
+    // alert Dailog
+    async function alertDialog(){
+        confirmAlert({
+            customUI: ({ onClose }) => {
+            return (
+            ///////////////////////////////////////////////Alert 띄우기///////////////////////////////////////////////        
+            <Dialog type="alert" header="확인" msg="수정이 완료되었습니다!" onClose={onClose} />
+            );
+          }
+        });
+      };
     
+    async function confirmDialog(data){
+        confirmAlert({
+            customUI: ({ onClose }) => {
+            return (
+            ///////////////////////////////////////////////Alert 띄우기///////////////////////////////////////////////        
+            // <Dialog type="alert" header="확인" msg="수정이 완료되었습니다!" onClose={onClose} />
+            
+            ///////////////////////////////////////////////Confirm 띄우기///////////////////////////////////////////////        
+            <Dialog type="confirm" header="확인" msg="등록하시겠습니까?" onClose={onClose} successFunc={() => afterConfirm(data)}/>
     
+            ///////////////////////////////////////////////Delete Confirm 띄우기///////////////////////////////////////////////       
+            // <Dialog type="delete" header="삭제" msg="삭제하시겠습니까?" onClose={onClose} successFunc={afterDelete}/>          
+            );
+          }
+        });
+      };
+    
+      async function deleteDialog(data){
+    
+        confirmAlert({
+            customUI: ({ onClose }) => {
+            return (
+            ///////////////////////////////////////////////Delete Confirm 띄우기///////////////////////////////////////////////       
+            <Dialog type="delete" header="삭제" msg="삭제하시겠습니까?" onClose={onClose} successFunc={() => afterDelete(data)}/>          
+            );
+          }
+        });
+      };
+    
+      function afterDelete(data){
+        setLoading(true);
+    
+        setTimeout(() => confirmAlert({
+            customUI: ({ onClose }) => {
+                setLoading(false);
+            return (
+            <Dialog type="alert" header="확인" msg="삭제가 완료되었습니다!" onClose={onClose}/>        
+            );
+          }
+        }), 5000)
+        
+        
+    }
+    
+    function afterConfirm(data){
+        // console.log("userName >> "+data.name);
+        // console.log("birth >> "+data.birth);
+        // console.log("phoneNum >> "+data.phoneNum);
+        if(data !=null){
+            APITestByGet(data);
+        }
+        // console.log(datas);
+        confirmAlert({
+            customUI: ({ onClose }) => {
+            return (
+                <Dialog type="alert" header="확인" msg="등록이 완료되었습니다!" onClose={onClose}/>        
+            );
+          }
+        });
+    }
     return (
         <div className="container">
-            <div className="contentsWrapper ">
+            {loading ? <Loading/> : ""} 
+                <div className="contentsWrapper ">
                 <div className="datatableTestWrapper content">
                     <h3>DataTable 라이브러리 사용하기</h3>
                     {/* <Datatable dataTableColumnDefs={dataTableColumnDefs} dataTableData={dataTableData} dataTableColumns={dataTableColumns}></Datatable> */}
@@ -246,7 +326,6 @@ function APITest() {
                             출처 : <a href='https://nivo.rocks/pie/canvas/'>NIVO 라이브러리</a>
                         </div>
                         <LineChart></LineChart>
-                        
                     </div>
                 </div>
                 <div className="chartTestWrapper2 content">                    
@@ -278,7 +357,6 @@ function APITest() {
                     </ul> */}
                 </div>
             </div>
-            
         </div>
     );
 }

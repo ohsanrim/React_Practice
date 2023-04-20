@@ -18,7 +18,8 @@ function NavBar() {
   };
 
   return (
-    <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%', display: 'flex', alignItems :'center' }}>
+    // <nav className="menu" style={{ position: 'fixed', zIndex: 5, width: '100%', display: 'flex', alignItems :'center' }}>
+    <nav className="menu" style={{ position: 'fixed', width: '100%', display: 'flex', alignItems :'center' }}>
       <div className="menu__logo">
         <a href="/">MORIP</a>
       </div>
