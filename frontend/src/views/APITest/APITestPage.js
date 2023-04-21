@@ -3,7 +3,7 @@
 import './APITest/page.css';
 import axiosApi from '../../utils/api/AxiosApi.js';
 import axios from 'axios';
-import React, {useRef, useState, useEffect} from "react";
+import React, {forwardRef, useRef, useState, useEffect} from "react";
 // import axios from 'axios';
 import { USER_SERVER } from '../../Config.js';
 import { confirmAlert } from "react-confirm-alert";
@@ -21,7 +21,8 @@ import LineChartByChartJS from '../../utils/chart/chartjs.jsx';
 import Loading from '../../utils/loading/Loading.jsx';
 import $ from 'jquery';
 
-
+//Modal
+import useModal from '../../utils/modal/useModal.js';
 
 
 // async function showDetails(data){
@@ -123,11 +124,16 @@ function APITest() {
     const [ phoneNum, setPhoneNume ] = useState(null);
     const [ birth, setBirth ] = useState(null);
     const [modalOpened, setModalOpened] = useState(false);
+    // const tableRef = useRef();
 
     useEffect(() => {
+        console.log("컴포넌트가 화면에서 나타남");
         setName("ohsanrim");
         setPhoneNume("01000000000");
         setBirth("19999999");   
+        return () => {
+            console.log("컴포넌트가 화면에서 사라짐");
+        }
     }, []);
 
     const handleOpen = () => {
@@ -215,29 +221,82 @@ function APITest() {
     // if (!datas) return null;
 
     //dataTable 
+   
+    const drawSearchTable = () => {
+        console.log("drawSearchTable");
+        $('#datatable').DataTable().draw();
+        // $(tableRef.current).DataTable().ajax.reload();
+    }
+
     // const dataTableData = [['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500'],['Suki Burks', 'Developer', 'London', '6832', '2020/10/22', '$114,500']];
     const dataTableColumns = [
-        { data: 'name', title: 'Name' },
-        { data: 'position', title: 'Position' },
-        { data: 'office', title: 'Office' },
-        { data: 'extn', title: 'Extn.' },
-        { data: 'startDate', title: 'Start date' },
-        { data: 'salary', title: 'Salary' },
-        { title:'Detail', name: 'Detail',defaultContent:"<input type=\"button\" class=\"showDetailBtn\" value=\"상세정보\">",
+    //     { data: 'name', title: 'Name' },
+    //     { data: 'position', title: 'Position' },
+    //     { data: 'office', title: 'Office' },
+    //     { data: 'extn', title: 'Extn.' },
+    //     { data: 'startDate', title: 'Start date' },
+    //     { data: 'salary', title: 'Salary' },
+    //     { title:'Detail', name: 'Detail',defaultContent:"<input type=\"button\" class=\"showDetailBtn\" value=\"상세정보\">",
+    //     createdCell: function (cell, cellData, rowData){$(cell).on("click", "input", rowData, showDetailColume);}
+    // }
+
+    { data: 'chaincodeName', title: 'chaincodeName' },
+    { data: 'channelName', title: 'channelName' },
+    { data: 'createdDate', title: 'createdDate' },
+    { title:'Detail', name: 'Detail',defaultContent:"<input type=\"button\" class=\"showDetailBtn\" value=\"상세정보\">",
         createdCell: function (cell, cellData, rowData){$(cell).on("click", "input", rowData, showDetailColume);}
     }
     ];
 
+    const { openModal } = useModal();
+
     function showDetailColume(event) {
-        alert("You clicked in " + event.data.name + "'s row");
+        openModal({ type: "first" });
+        
+        fetch(USER_SERVER+"/dataTableSearchDetailTest/"+event.data.id, { method: "GET" })
+         .then((res) => {return res.json();})
+         .then((data) => {
+            console.log(data);
+        })
+        
       }
 
+    const [ SEL_GROUP_ID, setSEL_GROUP_ID ] = useState("");
+    const [ searchKind, setSearchKind] = useState("");
+    const [ searchValue, setSearchValue] = useState("");
     const dataTableAjax ={
         type: 'GET',
-        url: USER_SERVER+"/dataTableTestAPI",
+        url: USER_SERVER+"/dataTableSearchTest",
         dataType: 'json',
+        data: function ( params ) {
+            /* sort field */
+            params = dataTableParamAdjust(params);
+
+            /* search field */
+            params.objectId = SEL_GROUP_ID;
+            
+            params.searchKind = searchKind.current;
+
+            params.searchValue = searchValue.current;
+
+        }
       };
 
+      function dataTableParamAdjust(params){
+		console.log(params);
+		for (var i = 0; i < params.order.length; i++) {
+			const columnIndex = params.order[i].column;
+			params.orderColumn = params.columns[columnIndex].data;
+			params.orderDir = params.order[i].dir;
+	    }
+		params.columns = null;
+		params.order = null;
+		return params;
+	}
+
+      const onChange= (e) => {
+        setSearchValue(e.target.value);
+      }
 
       function APITestByGet(data){
         fetch("/gateway/restapi/v1.0/APITestByGet/"+data.name+"/"+data.phoneNum+"/"+data.birth, { method: "GET" })
@@ -301,7 +360,10 @@ function APITest() {
         
         
     }
+
     
+
+
     function afterConfirm(data){
         // console.log("userName >> "+data.name);
         // console.log("birth >> "+data.birth);
@@ -318,12 +380,26 @@ function APITest() {
           }
         });
     }
+
     return (
         <div className="container">
             {loading ? <Loading/> : ""} 
                 <div className="contentsWrapper ">
                 <div className="datatableTestWrapper content">
                     <h3>DataTable 라이브러리 사용하기</h3>
+                    <div className="page_top_area">
+                        <div  className="search_wrap">
+                            <select  className="log_select1" name="searchKind" id="searchKind">
+                                <option value="">검색조건</option>
+                                <option value="chaincodeName">체인코드명</option>
+                                <option value="channelName">채널명</option>
+                            </select>
+                            <div  className="search_text">
+                                <input type="text" value={searchValue} className="searchValue" name="searchValue" id="searchValue" onChange={onChange} placeholder="Search..."/>
+                                <button type="button" onClick={drawSearchTable}>검색</button>
+                            </div>
+                        </div>
+                    </div>
                     {/* <Datatable dataTableColumnDefs={dataTableColumnDefs} dataTableData={dataTableData} dataTableColumns={dataTableColumns}></Datatable> */}
                     <Datatable dataTableAjax={dataTableAjax} dataTableColumns={dataTableColumns}></Datatable>
                 </div>
@@ -358,11 +434,15 @@ function APITest() {
                 </div>
                 <div className="queryTestWrapper content">
                     <h3>API 조회</h3>
+
                     {/* <ul>
                         {datas.map(data => (
                             <li key={data.no}><label>이름: </label>{data.name}<button onClick={() => confirmDialog(data)}>상세보기</button></li>
                         ))}
                     </ul> */}
+                </div>
+                <div className="source_url">
+                    출처 : <a href='https://react.vlpt.us/react-router/04-extra.html'>React 스터디</a>
                 </div>
             </div>
         </div>

@@ -9,7 +9,10 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import ReduxThunk from 'redux-thunk';
 import Reducer from './_reducers';
-// import { Provider } from "react-redux";
+
+import ModalProvider from "./utils/modal/ModalProvider.js";
+import ModalContainer from "./utils/modal/MOdalContainer";
+
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,7 +24,10 @@ root.render(
               window.__REDUX_DEVTOOLS_EXTENSION__()
           )}
       >
-        <App />
+        <ModalProvider>
+          <App />
+          <ModalContainer />
+        </ModalProvider>
       </Provider>
     </BrowserRouter>
 );
