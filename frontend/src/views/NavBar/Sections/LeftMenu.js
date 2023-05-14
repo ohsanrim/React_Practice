@@ -6,9 +6,11 @@ import Menu from "antd/lib/menu";
 
 const items = [
 
-  { label: <a href="/">Home</a>, key: "Home" },
+  // { label: <a href="/">Home</a>, key: "Home" },
   
-  { label: <a href="/Report">Report</a>, key: "Report" },
+  { label: <a href="/Home">Home</a>, key: "Home" },
+
+  { label: <a href="/Mypage">Mypage</a>, key: "Mypage" },
 
   { label: <a href="/APITest">APITEST</a>, key: "APITEST" }
 

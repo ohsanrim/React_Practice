@@ -9,18 +9,11 @@ function HomePage() {
         <div className="container">
 
             {/* user image section */}
-            <div className="section1">
+            <div className="section">
                 <Overallstatistics name="harin">
                 </Overallstatistics>
             </div>
 
-            {/* background image section */}
-            <div className="section2">
-            </div>
-            
-            {/* contents image section */}
-            {/* <div className="section3">
-            </div> */}
         </div>
     )
 }
